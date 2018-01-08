@@ -16,6 +16,25 @@ public class KoersDag {
     private Double turnover;
     private String valuta;
 
+    public Double getMinLaagOverPeriode() {
+        return minLaagOverPeriode;
+    }
+
+    public void setMinLaagOverPeriode(Double minLaagOverPeriode) {
+        this.minLaagOverPeriode = minLaagOverPeriode;
+    }
+
+    public Double getMaxHoogOverPeriode() {
+        return maxHoogOverPeriode;
+    }
+
+    public void setMaxHoogOverPeriode(Double maxHoogOverPeriode) {
+        this.maxHoogOverPeriode = maxHoogOverPeriode;
+    }
+
+    private Double minLaagOverPeriode;
+    private Double maxHoogOverPeriode;
+
     public String getIsin() {
         return isin;
     }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class KoersAnalyze {
 
-    private static final Long aantalDagenBinnenHoogLaag = 1095L;
+    private static final Integer aantalDagenBinnenHoogLaag = 1095;
     private Date stopDate;
 
     public static void main(String[] args) {
@@ -22,16 +22,22 @@ public class KoersAnalyze {
         KoersInlezer ki = new KoersInlezer();
         List<KoersDag> kds = ki.leesKoersDagenIn();
         int i = 0;
-        stopDate = new Date(System.currentTimeMillis() - aantalDagenBinnenHoogLaag * 24 * 3600 * 1000);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(kds.get(kds.size() -1).getDatum());
+        cal.add(Calendar.DATE, (aantalDagenBinnenHoogLaag * -1));
+        stopDate = cal.getTime();
+        System.out.println(stopDate);
         while (i < kds.size() && kds.get(i).getDatum().before(stopDate)) {
             Date current = kds.get(i).getDatum();
             Calendar c = Calendar.getInstance();
             c.setTime(current);
-            c.add(Calendar.DATE, 1095);
+            c.add(Calendar.DATE, aantalDagenBinnenHoogLaag);
             Date datumTot = c.getTime();
             Double hoog = hoogOpClose(current, datumTot, kds);
             Double laag = laagOpClose(current, datumTot, kds);
             System.out.println(current + ": " + hoog + " - " + laag + " verschil: " + (hoog - laag));
+            kds.get(i).setMinLaagOverPeriode(laag);
+            kds.get(i).setMaxHoogOverPeriode(hoog);
             i++;
         }
     }
